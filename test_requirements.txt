@@ -1,0 +1,4 @@
+coverage
+doks
+flake8
+pytest
