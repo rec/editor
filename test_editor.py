@@ -11,15 +11,16 @@ EDITOR = editor.default_editor()
 class TestEditor(unittest.TestCase):
     @tdir(FILENAME)
     def test_existing(self, call):
-        with self.assertRaises(ValueError) as m:
-            editor('X', filename=FILENAME)
-        assert m.exception.args[0] == 'Will not overwrite existing file'
 
         actual = editor(filename=FILENAME)
         expected = FILENAME + '\n'
         assert actual == expected
 
         call.assert_called_once_with([EDITOR, FILENAME])
+
+        actual = editor('X', filename=FILENAME)
+        expected = 'X'
+        assert actual == expected
 
     @tdir
     def test_new(self, call):
