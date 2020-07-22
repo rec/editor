@@ -7,7 +7,7 @@ source = editor
 
 [report]
 
-fail_under = 30
+fail_under = 100
 skip_covered = True
 
 exclude_lines =

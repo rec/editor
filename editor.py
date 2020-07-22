@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 import subprocess
 import tempfile
@@ -9,17 +10,21 @@ __version__ = '0.9.0'
 
 @xmod
 def editor(initial_contents='', filename=None, editor=EDITOR):
-    def edit(fp, filename):
-        subprocess.call([editor, filename])
-        fp.seek(0)
-        return fp.read()
+    if not filename:
+        with tempfile.NamedTemporaryFile(mode='r+') as fp:
+            fp.write(initial_contents)
+            fp.flush()
 
-    if filename:
-        assert not initial_contents
-        with open(filename) as fp:
-            return edit(fp, filename)
+            subprocess.call([editor, fp.name])
 
-    with tempfile.NamedTemporaryFile() as fp:
-        fp.write(initial_contents)
-        fp.flush()
-        return edit(fp, fp.name)
+            fp.seek(0)
+            return fp.read()
+
+    path = Path(filename)
+    if initial_contents:
+        if path.exists():
+            raise ValueError('Will not overwrite existing file')
+        path.write_text(initial_contents)
+
+    subprocess.call([editor, filename])
+    return path.read_text()
