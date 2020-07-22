@@ -4,6 +4,7 @@ import tdir
 import unittest
 
 FILENAME = 'a_file.txt'
+EDITOR = editor.default_editor()
 
 
 @mock.patch('editor.subprocess.call', autospec=True)
@@ -18,7 +19,7 @@ class TestEditor(unittest.TestCase):
         expected = FILENAME + '\n'
         assert actual == expected
 
-        call.assert_called_once_with([editor.EDITOR, FILENAME])
+        call.assert_called_once_with([EDITOR, FILENAME])
 
     @tdir
     def test_new(self, call):
@@ -26,7 +27,7 @@ class TestEditor(unittest.TestCase):
         expected = 'X'
         assert actual == expected
 
-        call.assert_called_once_with([editor.EDITOR, FILENAME])
+        call.assert_called_once_with([EDITOR, FILENAME])
 
     def test_temp(self, call):
         actual = editor()

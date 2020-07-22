@@ -1,17 +1,23 @@
+"""
+🖋 editor - open a text editor 🖋️
+-------------------------------------
+"""
+
 from pathlib import Path
 import os
 import subprocess
 import tempfile
 import xmod
 
-EDITOR = os.environ.get('EDITOR', 'vim')
+__all__ = 'edit', 'default_editor'
 __version__ = '0.9.0'
 
 
 @xmod
-def editor(initial_contents='', filename=None, editor=EDITOR):
+def edit(initial_contents='', filename=None, editor=None):
+    editor = editor or default_editor()
     if not filename:
-        with tempfile.NamedTemporaryFile(mode='r+') as fp:
+        with tempfile.NamedTemporaryFile(mode='r+', suffix='.txt') as fp:
             fp.write(initial_contents)
             fp.flush()
 
@@ -28,3 +34,7 @@ def editor(initial_contents='', filename=None, editor=EDITOR):
 
     subprocess.call([editor, filename])
     return path.read_text()
+
+
+def default_editor():
+    return os.environ.get('EDITOR', 'vim')
