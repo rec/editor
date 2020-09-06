@@ -47,7 +47,7 @@ import tempfile
 import xmod
 
 __all__ = 'editor', 'default_editor'
-__version__ = '0.9.0'
+__version__ = '0.10.0'
 
 
 @xmod
