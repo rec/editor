@@ -42,6 +42,7 @@ If a filename is provided, then it gets edited!
 
 from pathlib import Path
 import os
+import shlex
 import subprocess
 import tempfile
 import xmod
@@ -51,7 +52,7 @@ __version__ = '0.10.0'
 
 
 @xmod
-def editor(initial_contents=None, filename=None, editor=None):
+def editor(initial_contents=None, filename=None, editor=None, shell=False):
     """
     Open a text editor, user edits, return results
 
@@ -66,15 +67,34 @@ def editor(initial_contents=None, filename=None, editor=None):
 
       editor
         The path to an editor to call.  If None, use editor.default_editor()
+        If None, use editor.default_editor().
+
+        `editor` can either be a string, or a list or tuple of strings.
+        Depending on the setting of shell=, it will be converted into the right
+        type using shlex.split or shlex.join.
+
+      shell
+        Passed to subprocess.call
+
     """
     editor = editor or default_editor()
+    if not editor:
+        raise ValueError('Editor is empty')
+
+    if isinstance(editor, str):
+        if not shell:
+            editor = shlex.split(editor)
+    else:
+        if shell:
+            editor = shlex.join(editor)
+
     if not filename:
         with tempfile.NamedTemporaryFile(mode='r+', suffix='.txt') as fp:
             if initial_contents is not None:
                 fp.write(initial_contents)
                 fp.flush()
 
-            subprocess.call([editor, fp.name])
+            subprocess.call(editor + [fp.name])
 
             fp.seek(0)
             return fp.read()
@@ -83,7 +103,7 @@ def editor(initial_contents=None, filename=None, editor=None):
     if initial_contents is not None:
         path.write_text(initial_contents)
 
-    subprocess.call([editor, filename])
+    subprocess.call(editor + [filename])
     return path.read_text()
 
 
