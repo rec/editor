@@ -65,16 +65,20 @@ def editor(initial_contents=None, filename=None, editor=None):
         is used.
 
       editor
-        The path to an editor to call.  If None, use editor.default_editor()
+        The path to an editor to call.  If None, use editor.default_editor().
+        If it is a str, it will be converted to a list splitting by spaces.
+        If it is a list, it will be kept as is.
     """
     editor = editor or default_editor()
+    if type(editor) is str:
+        editor = editor.split()
     if not filename:
         with tempfile.NamedTemporaryFile(mode='r+', suffix='.txt') as fp:
             if initial_contents is not None:
                 fp.write(initial_contents)
                 fp.flush()
 
-            subprocess.call([editor, fp.name])
+            subprocess.call(editor + [fp.name])
 
             fp.seek(0)
             return fp.read()
@@ -83,15 +87,15 @@ def editor(initial_contents=None, filename=None, editor=None):
     if initial_contents is not None:
         path.write_text(initial_contents)
 
-    subprocess.call([editor, filename])
+    subprocess.call(editor + [filename])
     return path.read_text()
 
 
 def default_editor():
     """
-    Return the default text editor.
+    Return the default text editor as a list of command arguments.
 
     This is the contents of the environment variable EDITOR, or  ``'vim'`` if
     that variable is not set or is empty.
     """
-    return os.environ.get('EDITOR', 'vim')
+    return os.environ.get('EDITOR', 'vim').split()
