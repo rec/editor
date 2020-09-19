@@ -42,6 +42,7 @@ If a filename is provided, then it gets edited!
 
 from pathlib import Path
 import os
+import platform
 import shlex
 import subprocess
 import tempfile
@@ -49,6 +50,9 @@ import xmod
 
 __all__ = 'editor', 'default_editor'
 __version__ = '0.10.0'
+
+DEFAULT_EDITOR = 'vim'
+WINDOWS_DEFAULT_EDITOR = 'notepad'
 
 
 @xmod
@@ -111,7 +115,15 @@ def default_editor():
     """
     Return the default text editor.
 
-    This is the contents of the environment variable EDITOR, or  ``'vim'`` if
-    that variable is not set or is empty.
+    The default text editor is the contents of the environment variable EDITOR,
+    it it's non-empty, otherwise if the platform is Windows, it's 'notepad',
+    otherwise 'vim'.
     """
-    return os.environ.get('EDITOR', 'vim')
+    editor = os.environ.get('EDITOR')
+    if editor:
+        return editor
+
+    if platform.system() == 'Windows':
+        return WINDOWS_DEFAULT_EDITOR
+
+    return DEFAULT_EDITOR
