@@ -46,6 +46,7 @@ import platform
 import shlex
 import subprocess
 import tempfile
+import traceback
 import xmod
 
 __all__ = 'editor', 'default_editor'
@@ -92,23 +93,25 @@ def editor(initial_contents=None, filename=None, editor=None, shell=False):
         if shell:
             editor = shlex.join(editor)
 
-    if not filename:
-        with tempfile.NamedTemporaryFile(mode='r+', suffix='.txt') as fp:
-            if initial_contents is not None:
-                fp.write(initial_contents)
-                fp.flush()
+    if filename:
+        file_to_edit = filename
+    else:
+        fd, file_to_edit = tempfile.mkstemp()
+        os.close(fd)
 
-            subprocess.call(editor + [fp.name])
+    try:
+        path = Path(file_to_edit)
+        if initial_contents is not None:
+            path.write_text(initial_contents)
 
-            fp.seek(0)
-            return fp.read()
-
-    path = Path(filename)
-    if initial_contents is not None:
-        path.write_text(initial_contents)
-
-    subprocess.call(editor + [filename])
-    return path.read_text()
+        subprocess.call(editor + [file_to_edit])
+        return path.read_text()
+    finally:
+        if not filename:
+            try:
+                file_to_edit.remove()
+            except Exception:
+                traceback.print_exc()
 
 
 def default_editor():
