@@ -1,3 +1,7 @@
+## v0.10.2 - 20/10/07
+
+* Enable Python 3.9
+
 ## v0.10.1 - 20/09/21
 
 * Close tempfile before editor runs (fix #4)

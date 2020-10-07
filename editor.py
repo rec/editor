@@ -50,7 +50,7 @@ import traceback
 import xmod
 
 __all__ = 'editor', 'default_editor'
-__version__ = '0.10.1'
+__version__ = '0.10.2'
 
 DEFAULT_EDITOR = 'vim'
 WINDOWS_DEFAULT_EDITOR = 'notepad'
