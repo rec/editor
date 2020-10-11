@@ -16,7 +16,7 @@ class TestEditor(unittest.TestCase):
         expected = FILENAME + '\n'
         assert actual == expected
 
-        call.assert_called_once_with([EDITOR, FILENAME])
+        call.assert_called_once_with([EDITOR, FILENAME], shell=False)
 
         actual = editor('X', filename=FILENAME)
         expected = 'X'
@@ -24,11 +24,12 @@ class TestEditor(unittest.TestCase):
 
     @tdir
     def test_new(self, call):
-        actual = editor('X', filename=FILENAME)
+        actual = editor('X', filename=FILENAME, shell=True)
         expected = 'X'
         assert actual == expected
 
-        call.assert_called_once_with([EDITOR, FILENAME])
+        expected = '{} {}'.format(EDITOR, FILENAME)
+        call.assert_called_once_with(expected, shell=True)
 
     def test_temp(self, call):
         actual = editor()

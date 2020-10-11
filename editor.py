@@ -5,7 +5,11 @@
 ``editor`` opens an editor onto an existing file, a new file, or a tempfile,
 lets the user edit text, and returns the results.
 
-EXAMPLE: using a temporary file
+EXAMPLE
+========
+
+Using a temporary file
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If no filename is provided, a temporary file gets edited, and its
 contents returned.
@@ -14,11 +18,15 @@ contents returned.
 
     import editor
 
-    MESSAGE = 'Insert comments below this line\n\n'
+    MESSAGE = 'Insert comments below this line\\n\\n'
     comments = editor(MESSAGE)
     # Pops up the default editor with a tempfile, containing MESSAGE
 
-EXAMPLE: Using a named file
+EXAMPLE
+=========
+
+Using a named file
+~~~~~~~~~~~~~~~~~~~~
 
 If a filename is provided, then it gets edited!
 
@@ -47,22 +55,29 @@ import shlex
 import subprocess
 import tempfile
 import traceback
+import warnings
 import xmod
 
 __all__ = 'editor', 'default_editor'
 __version__ = '0.10.2'
 
 DEFAULT_EDITOR = 'vim'
-WINDOWS_DEFAULT_EDITOR = 'notepad'
+EDITORS = {'Windows': 'notepad'}
 
 
 @xmod
-def editor(initial_contents=None, filename=None, editor=None, shell=False):
+def editor(
+    text=None,
+    filename=None,
+    editor=None,
+    shell=False,
+    initial_contents=None,
+):
     """
     Open a text editor, user edits, return results
 
     ARGUMENTS
-      initial_contents
+      text
         If not None, this string is written to the file before the editor
         is opened.
 
@@ -74,24 +89,21 @@ def editor(initial_contents=None, filename=None, editor=None, shell=False):
         The path to an editor to call.  If None, use editor.default_editor()
         If None, use editor.default_editor().
 
-        `editor` can either be a string, or a list or tuple of strings.
-        Depending on the setting of shell=, it will be converted into the right
-        type using shlex.split or shlex.join.
+        ``editor`` can either be a string, or a list or tuple of strings.
+        Depending on the setting of ``shell=``, it will be converted into the
+        right type using shlex.split or ``shlex.join``.
 
       shell
         Passed to subprocess.call
 
-    """
-    editor = editor or default_editor()
-    if not editor:
-        raise ValueError('Editor is empty')
+      initial_contents
+        Same as ``text``.
+        For backwards compatibility.
 
-    if isinstance(editor, str):
-        if not shell:
-            editor = shlex.split(editor)
-    else:
-        if shell:
-            editor = shlex.join(editor)
+    """
+    if initial_contents is not None:
+        warnings.warn('Deprecated: use text= instead', DeprecationWarning)
+        text = initial_contents
 
     if filename:
         file_to_edit = filename
@@ -100,12 +112,23 @@ def editor(initial_contents=None, filename=None, editor=None, shell=False):
         os.close(fd)
 
     try:
-        path = Path(file_to_edit)
-        if initial_contents is not None:
-            path.write_text(initial_contents)
+        editor = editor or default_editor()
+        if shell:
+            if not isinstance(editor, str):
+                editor = shlex.join(editor)
+            editor = '{} {}'.format(editor, file_to_edit)
+        else:
+            if isinstance(editor, str):
+                editor = shlex.split(editor)
+            editor = [*editor, file_to_edit]
 
-        subprocess.call(editor + [file_to_edit])
+        path = Path(file_to_edit)
+        if text is not None:
+            path.write_text(text)
+
+        subprocess.call(editor, shell=shell)
         return path.read_text()
+
     finally:
         if not filename:
             try:
@@ -122,11 +145,5 @@ def default_editor():
     it it's non-empty, otherwise if the platform is Windows, it's 'notepad',
     otherwise 'vim'.
     """
-    editor = os.environ.get('EDITOR')
-    if editor:
-        return editor
-
-    if platform.system() == 'Windows':
-        return WINDOWS_DEFAULT_EDITOR
-
-    return DEFAULT_EDITOR
+    return os.environ.get('EDITOR') or (
+        EDITORS.get(platform.system(), DEFAULT_EDITOR))
