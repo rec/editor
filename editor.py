@@ -59,7 +59,7 @@ import warnings
 import xmod
 
 __all__ = 'editor', 'default_editor'
-__version__ = '0.10.2'
+__version__ = '1.0.0'
 
 DEFAULT_EDITOR = 'vim'
 EDITORS = {'Windows': 'notepad'}
