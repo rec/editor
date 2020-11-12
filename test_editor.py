@@ -11,7 +11,6 @@ EDITOR = editor.default_editor()
 class TestEditor(unittest.TestCase):
     @tdir(FILENAME)
     def test_existing(self, call):
-
         actual = editor(filename=FILENAME)
         expected = FILENAME + '\n'
         assert actual == expected
