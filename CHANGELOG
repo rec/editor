@@ -1,3 +1,9 @@
+## v1.0.1 - 20/11/16
+
+* Improve documentation
+* Add doks settings to pyproject.toml
+* Added pyproject.toml
+
 ## v1.0.0 - 20/10/11
 
 * Clean interface and add a test
