@@ -2,7 +2,7 @@
 🖋 editor - open a text editor, user edits, return results  🖋
 ------------------------------------------------------------------
 
-``editor`` opens an editor onto an existing file, a new file, or a tempfile,
+`editor` opens an editor onto an existing file, a new file, or a tempfile,
 lets the user edit text, and returns the results.
 
 EXAMPLE
@@ -55,7 +55,6 @@ import shlex
 import subprocess
 import tempfile
 import traceback
-import warnings
 import xmod
 
 __all__ = 'editor', 'default_editor'
@@ -66,45 +65,30 @@ EDITORS = {'Windows': 'notepad'}
 
 
 @xmod
-def editor(
-    text=None,
-    filename=None,
-    editor=None,
-    shell=False,
-    initial_contents=None,
-):
+def editor(text=None, filename=None, editor=None, shell=False):
     """
-    Open a text editor, user edits, return results
+    Open a text editor, block while the user edits, then return the results
 
     ARGUMENTS
       text
-        If not None, this string is written to the file before the editor
+        If `text` is not `None`, it is written to the file before the editor
         is opened.
 
       filename
-        If not None, the name of the file to edit.  If None, a temporary file
-        is used.
+        If `filename` is `None`, the name of the file to edit.  If `None`, a
+        temporary file is used.
 
       editor
-        The path to an editor to call.  If None, use editor.default_editor()
-        If None, use editor.default_editor().
+        The path to an editor to call.
+        If `None`, use `editor.default_editor()`
 
-        ``editor`` can either be a string, or a list or tuple of strings.
-        Depending on the setting of ``shell=``, it will be converted into the
-        right type using shlex.split or ``shlex.join``.
+        `editor` can either be a string, or a list or tuple of strings.
+        Depending on the setting of `shell=`, it will be converted into the
+        right type using `shlex.split()` or `shlex.join()`.
 
       shell
-        Passed to subprocess.call
-
-      initial_contents
-        Same as ``text``.
-        For backwards compatibility.
-
+        Passed to `subprocess.call`
     """
-    if initial_contents is not None:
-        warnings.warn('Deprecated: use text= instead', DeprecationWarning)
-        text = initial_contents
-
     if filename:
         file_to_edit = filename
     else:
@@ -141,9 +125,10 @@ def default_editor():
     """
     Return the default text editor.
 
-    The default text editor is the contents of the environment variable EDITOR,
-    it it's non-empty, otherwise if the platform is Windows, it's 'notepad',
-    otherwise 'vim'.
+    The default text editor is the contents of the environment variable
+    `EDITOR`, it it's non-empty, otherwise if the platform is Windows, it's
+    `'notepad'`, otherwise `'vim'`.
     """
     return os.environ.get('EDITOR') or (
-        EDITORS.get(platform.system(), DEFAULT_EDITOR))
+        EDITORS.get(platform.system(), DEFAULT_EDITOR)
+    )
