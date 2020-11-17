@@ -7,7 +7,7 @@ FILENAME = 'a_file.txt'
 EDITOR = editor.default_editor()
 
 
-@mock.patch('editor.subprocess.call', autospec=True)
+@mock.patch('editor.runs.call', autospec=True)
 class TestEditor(unittest.TestCase):
     @tdir(FILENAME)
     def test_existing(self, call):
@@ -15,7 +15,7 @@ class TestEditor(unittest.TestCase):
         expected = FILENAME + '\n'
         assert actual == expected
 
-        call.assert_called_once_with([EDITOR, FILENAME], shell=False)
+        call.assert_called_once_with('{} {}'.format(EDITOR, FILENAME))
 
         actual = editor('X', filename=FILENAME)
         expected = 'X'

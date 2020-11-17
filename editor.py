@@ -1,9 +1,9 @@
 """
-🖋 editor - open a text editor, user edits, return results  🖋
+🖋 editor - open a text editor from inside Python 🖋
 ------------------------------------------------------------------
 
-`editor` opens an editor onto an existing file, a new file, or a tempfile,
-lets the user edit text, and returns the results.
+`editor` opens a text editor for an existing file, a new file, or a tempfile,
+blocks while the user edits text, then returns the results.
 
 EXAMPLE
 ========
@@ -19,7 +19,7 @@ contents returned.
     import editor
 
     MESSAGE = 'Insert comments below this line\\n\\n'
-    comments = editor(MESSAGE)
+    comments = editor(text=MESSAGE)
     # Pops up the default editor with a tempfile, containing MESSAGE
 
 EXAMPLE
@@ -37,7 +37,7 @@ If a filename is provided, then it gets edited!
     FILE = 'file.txt'
     assert not os.path.exists(FILE)
 
-    comments = editor(MESSAGE, filename=FILE)
+    comments = editor(text=MESSAGE, filename=FILE)
     # Pops up an editor for new FILE containing MESSAGE, user edits
 
     assert os.path.exists(FILE)
@@ -51,8 +51,7 @@ If a filename is provided, then it gets edited!
 from pathlib import Path
 import os
 import platform
-import shlex
-import subprocess
+import runs
 import tempfile
 import traceback
 import xmod
@@ -65,58 +64,44 @@ EDITORS = {'Windows': 'notepad'}
 
 
 @xmod
-def editor(text=None, filename=None, editor=None, shell=False):
+def editor(text=None, filename=None, editor=None, **kwargs):
     """
     Open a text editor, block while the user edits, then return the results
 
     ARGUMENTS
       text
-        If `text` is not `None`, it is written to the file before the editor
-        is opened.
+        A string which is written to the file before the editor is opened.
+        If `None`, the file is left unchanged.
 
       filename
-        If `filename` is `None`, the name of the file to edit.  If `None`, a
-        temporary file is used.
+        The name of the file to edit.  If `None`, a temporary file is used.
 
       editor
-        The path to an editor to call.
-        If `None`, use `editor.default_editor()`
+        A string containing the command used to invoke the text editor.
+        If `None`, use `editor.default_editor()`.
 
-        `editor` can either be a string, or a list or tuple of strings.
-        Depending on the setting of `shell=`, it will be converted into the
-        right type using `shlex.split()` or `shlex.join()`.
-
-      shell
-        Passed to `subprocess.call`
-    """
-    if filename:
-        file_to_edit = filename
-    else:
-        fd, file_to_edit = tempfile.mkstemp()
+      kwargs
+        Arguments passed on to `runs.call()`, an enhanced `subprocess.call()`
+"""
+    editor = editor or default_editor()
+    is_temp = not filename
+    if is_temp:
+        fd, filename = tempfile.mkstemp()
         os.close(fd)
 
     try:
-        editor = editor or default_editor()
-        if shell:
-            if not isinstance(editor, str):
-                editor = shlex.join(editor)
-            editor = '{} {}'.format(editor, file_to_edit)
-        else:
-            if isinstance(editor, str):
-                editor = shlex.split(editor)
-            editor = [*editor, file_to_edit]
-
-        path = Path(file_to_edit)
+        path = Path(filename)
         if text is not None:
             path.write_text(text)
 
-        subprocess.call(editor, shell=shell)
+        cmd = '{} {}'.format(editor, filename)
+        runs.call(cmd, **kwargs)
         return path.read_text()
 
     finally:
-        if not filename:
+        if is_temp:
             try:
-                file_to_edit.remove()
+                filename.remove()
             except Exception:
                 traceback.print_exc()
 
