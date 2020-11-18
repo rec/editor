@@ -5,14 +5,19 @@
 `editor` opens a text editor for an existing file, a new file, or a tempfile,
 blocks while the user edits text, then returns the results.
 
+You can specify a command line that runs the editor, but usually you leave it
+empty - in that case, `editor` gets the command line from the environment
+variable `VISUAL`, or if that's empty, the environment variable `EDITOR`, or if
+*that's* empty, either `Notepad` on Windows or `vi` elsewhere.
+
 EXAMPLE
 ========
 
 Using a temporary file
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If no filename is provided, a temporary file gets edited, and its
-contents returned.
+If no filename is provided, a temporary file gets edited, and its contents
+returned.
 
 .. code-block:: python
 
@@ -43,8 +48,6 @@ If a filename is provided, then it gets edited!
     assert os.path.exists(FILE)
 
     # You can edit an existing file too, and select your own editor.
-    # By default, it uses the editor from the environment variable EDITOR
-
     comments2 = editor(filename=FILE, editor='emacs')
 """
 
@@ -114,6 +117,7 @@ def default_editor():
     `EDITOR`, it it's non-empty, otherwise if the platform is Windows, it's
     `'notepad'`, otherwise `'vim'`.
     """
-    return os.environ.get('EDITOR') or (
-        EDITORS.get(platform.system(), DEFAULT_EDITOR)
+    return os.environ.get('VISUAL') or (
+        os.environ.get('EDITOR')
+        or EDITORS.get(platform.system(), DEFAULT_EDITOR)
     )
