@@ -104,7 +104,7 @@ def editor(text=None, filename=None, editor=None, **kwargs):
     finally:
         if is_temp:
             try:
-                filename.remove()
+                os.unlink(filename)
             except Exception:
                 traceback.print_exc()
 
