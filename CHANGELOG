@@ -1,3 +1,7 @@
+## v1.2.1 - 21/02/26
+
+* Fix exception when using tempfiles
+
 ## v1.2.0 - 20/11/18
 
 * Use VISUAL environment variable
