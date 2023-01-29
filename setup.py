@@ -31,7 +31,7 @@ if __name__ == '__main__':
         author_email='tom@swirly.com',
         url='https://github.com/rec/editor',
         py_modules=['editor'],
-        description='Open the default text editor',
+        description='🖋️Open the default text editor 🖋',
         long_description=open('README.rst').read(),
         license='MIT',
         classifiers=_classifiers,
