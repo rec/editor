@@ -5,3 +5,18 @@ target-version = ['py37']
 
 [tool.doks]
 auto = true
+
+[tool.poetry]
+name = "editor"
+version = "1.2.1"
+description = "🖋️Open the default text editor 🖋"
+authors = ["Tom Ritchford <tom@swirly.com>"]
+license = "MIT"
+readme = "README.rst"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
