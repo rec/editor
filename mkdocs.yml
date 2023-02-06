@@ -1,0 +1,19 @@
+site_name: '🖋: `editor`: Open the default text editor 🖋'
+
+theme:
+  name: material
+
+  palette:
+    primary:
+      'indigo'
+
+  font:
+    text:
+      Roboto
+    code:
+      Roboto Mono
+
+extra_css: [extra.css]
+
+plugins:
+    - mkdocstrings
