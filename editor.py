@@ -1,20 +1,15 @@
 """
 🖋 editor - open a text editor from inside Python 🖋
-------------------------------------------------------------------
 
 `editor` opens a text editor for an existing file, a new file, or a tempfile,
 blocks while the user edits text, then returns the results.
 
 You can specify a command line that runs the editor, but usually you leave it
-empty - in that case, `editor` gets the command line from the environment
+empty - in that case, `editor` uses the  the command line from the environment
 variable `VISUAL`, or if that's empty, the environment variable `EDITOR`, or if
 *that's* empty, either `Notepad` on Windows or `vi` elsewhere.
 
-EXAMPLE
-========
-
-Using a temporary file
-~~~~~~~~~~~~~~~~~~~~~~~~~
+### Example 1: Using a temporary file
 
 If no filename is provided, a temporary file gets edited, and its contents
 returned.
@@ -26,11 +21,7 @@ returned.
     comments = editor(text=MESSAGE)
     # Pops up the default editor with a tempfile, containing MESSAGE
 
-EXAMPLE
-=========
-
-Using a named file
-~~~~~~~~~~~~~~~~~~~~
+### Example 2: Using a named file
 
 If a filename is provided, then it gets edited!
 
@@ -68,20 +59,18 @@ def editor(text=None, filename=None, editor=None, **kwargs):
     """
     Open a text editor, block while the user edits, then return the results
 
-    ARGUMENTS
-      text
-        A string which is written to the file before the editor is opened.
-        If `None`, the file is left unchanged.
+    Args:
 
-      filename
-        The name of the file to edit.  If `None`, a temporary file is used.
+      text: A string which is written to the file before the editor is opened.
+          If `None`, the file is left unchanged.
 
-      editor
-        A string containing the command used to invoke the text editor.
-        If `None`, use `editor.default_editor()`.
+      filename: The name of the file to edit.
+          If `None`, a temporary file is used.
 
-      kwargs
-        Arguments passed on to `runs.call()`, an enhanced `subprocess.call()`
+      editor: A string containing the command used to invoke the text editor.
+         If `None`, use `editor.default_editor()`.
+
+      kwargs: Arguments passed on to `subprocess.call()`
 """
     editor = editor or default_editor()
     is_temp = not filename
