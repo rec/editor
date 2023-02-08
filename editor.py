@@ -19,7 +19,6 @@ Using a temporary file
 If no filename is provided, a temporary file gets edited, and its contents
 returned.
 
-.. code-block:: python
 
     import editor
 
@@ -35,7 +34,6 @@ Using a named file
 
 If a filename is provided, then it gets edited!
 
-.. code-block:: python
 
     import os
 
