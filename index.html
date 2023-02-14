@@ -193,28 +193,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#editor--editor-open-a-text-editor-from-inside-python" class="md-nav__link">
-    &#128395; editor - open a text editor from inside Python &#128395;
+  <a href="#editor--example-1-using-a-temporary-file" class="md-nav__link">
+    Example 1: Using a temporary file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#editor--example-2-using-a-named-file" class="md-nav__link">
+    Example 2: Using a named file
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#editor--example" class="md-nav__link">
-    EXAMPLE
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#editor--example_1" class="md-nav__link">
-    EXAMPLE
-  </a>
   
 </li>
       
@@ -233,8 +226,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#more-info" class="md-nav__link">
-    More info
+  <a href="#about-this-project" class="md-nav__link">
+    About this project
   </a>
   
 </li>
@@ -282,28 +275,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#editor--editor-open-a-text-editor-from-inside-python" class="md-nav__link">
-    &#128395; editor - open a text editor from inside Python &#128395;
+  <a href="#editor--example-1-using-a-temporary-file" class="md-nav__link">
+    Example 1: Using a temporary file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#editor--example-2-using-a-named-file" class="md-nav__link">
+    Example 2: Using a named file
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#editor--example" class="md-nav__link">
-    EXAMPLE
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#editor--example_1" class="md-nav__link">
-    EXAMPLE
-  </a>
   
 </li>
       
@@ -322,8 +308,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#more-info" class="md-nav__link">
-    More info
+  <a href="#about-this-project" class="md-nav__link">
+    About this project
   </a>
   
 </li>
@@ -344,23 +330,19 @@
 
 
 
-<h1 id="editor-open-the-default-text-editor">&#128395;: <code>editor</code>: Open the default text editor &#128395;</h1>
-
-
 <div class="doc doc-object doc-module">
 
 
 <a id="editor"></a>
   <div class="doc doc-contents first">
   
-      <h3 id="editor--editor-open-a-text-editor-from-inside-python">&#128395; editor - open a text editor from inside Python &#128395;</h3>
+      <p><code>editor</code> opens a text editor for an existing file, a new file, or a tempfile,
+blocks while the user edits text, then returns the results.</p>
 <p>You can specify a command line that runs the editor, but usually you leave it
-empty - in that case, <code>editor</code> gets the command line from the environment
+empty - in that case, <code>editor</code> uses the  the command line from the environment
 variable <code>VISUAL</code>, or if that's empty, the environment variable <code>EDITOR</code>, or if
 <em>that's</em> empty, either <code>Notepad</code> on Windows or <code>vi</code> elsewhere.</p>
-<h2 id="editor--example">EXAMPLE</h2>
-<p>Using a temporary file
-~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+<h4 id="editor--example-1-using-a-temporary-file">Example 1: Using a temporary file</h4>
 <p>If no filename is provided, a temporary file gets edited, and its contents
 returned.</p>
 <pre><code>import editor
@@ -369,9 +351,7 @@ MESSAGE = 'Insert comments below this line\n\n'
 comments = editor(text=MESSAGE)
 # Pops up the default editor with a tempfile, containing MESSAGE
 </code></pre>
-<h2 id="editor--example_1">EXAMPLE</h2>
-<p>Using a named file
-~~~~~~~~~~~~~~~~~~~~</p>
+<h4 id="editor--example-2-using-a-named-file">Example 2: Using a named file</h4>
 <p>If a filename is provided, then it gets edited!</p>
 <pre><code>import os
 
@@ -389,7 +369,10 @@ comments2 = editor(filename=FILE, editor='emacs')
 
   
 
-  <div class="doc doc-children">
+  <hr>
+<p></p>
+<h1>API Documentation</h1>
+<div class="doc doc-children">
 
 
 
@@ -419,18 +402,18 @@ comments2 = editor(filename=FILE, editor='emacs')
       <details class="quote">
         <summary>Source code in <code>editor/editor.py</code></summary>
         <div class="highlight"><table class="highlighttable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span></pre></div></td>
+<td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span></pre></div></td>
 <td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">default_editor</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Return the default text editor.</span>
@@ -463,81 +446,119 @@ comments2 = editor(filename=FILE, editor='emacs')
   <div class="doc doc-contents ">
   
       <p>Open a text editor, block while the user edits, then return the results</p>
-<p>ARGUMENTS
-  text
-    A string which is written to the file before the editor is opened.
-    If <code>None</code>, the file is left unchanged.</p>
-<p>filename
-    The name of the file to edit.  If <code>None</code>, a temporary file is used.</p>
-<p>editor
-    A string containing the command used to invoke the text editor.
-    If <code>None</code>, use <code>editor.default_editor()</code>.</p>
-<p>kwargs
-    Arguments passed on to <code>runs.call()</code>, an enhanced <code>subprocess.call()</code></p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>text</code></td>
+          <td>
+          </td>
+          <td><p>A string which is written to the file before the editor is opened.
+  If <code>None</code>, the file is left unchanged.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>filename</code></td>
+          <td>
+          </td>
+          <td><p>The name of the file to edit.
+  If <code>None</code>, a temporary file is used.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>editor</code></td>
+          <td>
+          </td>
+          <td><p>A string containing the command used to invoke the text editor.
+ If <code>None</code>, use <code>editor.default_editor()</code>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>kwargs</code></td>
+          <td>
+          </td>
+          <td><p>Arguments passed on to <code>subprocess.call()</code></p></td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
       <details class="quote">
         <summary>Source code in <code>editor/editor.py</code></summary>
         <div class="highlight"><table class="highlighttable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 66</span>
-<span class="normal"> 67</span>
-<span class="normal"> 68</span>
-<span class="normal"> 69</span>
-<span class="normal"> 70</span>
-<span class="normal"> 71</span>
-<span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
-<span class="normal"> 81</span>
-<span class="normal"> 82</span>
-<span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span></pre></div></td>
+<td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span></pre></div></td>
 <td class="code"><div><pre><span></span><code><span class="nd">@xmod</span>
 <span class="k">def</span> <span class="nf">editor</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Open a text editor, block while the user edits, then return the results</span>
 
-<span class="sd">    ARGUMENTS</span>
-<span class="sd">      text</span>
-<span class="sd">        A string which is written to the file before the editor is opened.</span>
-<span class="sd">        If `None`, the file is left unchanged.</span>
+<span class="sd">    Args:</span>
 
-<span class="sd">      filename</span>
-<span class="sd">        The name of the file to edit.  If `None`, a temporary file is used.</span>
+<span class="sd">      text: A string which is written to the file before the editor is opened.</span>
+<span class="sd">          If `None`, the file is left unchanged.</span>
 
-<span class="sd">      editor</span>
-<span class="sd">        A string containing the command used to invoke the text editor.</span>
-<span class="sd">        If `None`, use `editor.default_editor()`.</span>
+<span class="sd">      filename: The name of the file to edit.</span>
+<span class="sd">          If `None`, a temporary file is used.</span>
 
-<span class="sd">      kwargs</span>
-<span class="sd">        Arguments passed on to `runs.call()`, an enhanced `subprocess.call()`</span>
+<span class="sd">      editor: A string containing the command used to invoke the text editor.</span>
+<span class="sd">         If `None`, use `editor.default_editor()`.</span>
+
+<span class="sd">      kwargs: Arguments passed on to `subprocess.call()`</span>
 <span class="sd">"""</span>
     <span class="n">editor</span> <span class="o">=</span> <span class="n">editor</span> <span class="ow">or</span> <span class="n">default_editor</span><span class="p">()</span>
     <span class="n">is_temp</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">filename</span>
@@ -574,10 +595,10 @@ comments2 = editor(filename=FILE, editor='emacs')
   </div>
 
 </div>
-<h2 id="more-info">More info</h2>
+<h2 id="about-this-project">About this project</h2>
 <ul>
-<li><a href="https://github.com/rec/editor"> Code </a></li>
-<li><a href="https://github.com/rec"> Me </a></li>
+<li><a href="https://github.com/rec/editor"> Source code </a></li>
+<li><a href="https://github.com/rec"> More by this author </a></li>
 <li><a href="https://github.com/sponsors/rec"> Sponsors </a></li>
 </ul>
 
