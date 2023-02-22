@@ -12,7 +12,7 @@ version = "1.2.1"
 description = "🖋 Open the default text editor 🖋"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
-readme = "README.rst"
+readme = "README.me"
 
 [tool.poetry.dependencies]
 python = "^3.7"
