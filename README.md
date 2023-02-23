@@ -22,7 +22,6 @@ returned.
 
 If a filename is provided, then it gets edited!
 
-
     import os
 
     FILE = 'file.txt'
