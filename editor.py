@@ -25,7 +25,6 @@ returned.
 
 If a filename is provided, then it gets edited!
 
-
     import os
 
     FILE = 'file.txt'
@@ -41,6 +40,7 @@ If a filename is provided, then it gets edited!
 """
 
 from pathlib import Path
+from typing import Mapping, Optional, Union
 import os
 import platform
 import runs
@@ -55,7 +55,12 @@ EDITORS = {'Windows': 'notepad'}
 
 
 @xmod
-def editor(text=None, filename=None, editor=None, **kwargs):
+def editor(
+    text: Optional[str] = None,
+    filename: Union[None, Path, str] = None,
+    editor: Optional[str] = None,
+    **kwargs: Mapping
+):
     """
     Open a text editor, block while the user edits, then return the results
 
