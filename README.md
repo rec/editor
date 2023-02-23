@@ -1,5 +1,3 @@
-# 🖋 `editor`: Open the default text editor 🖋
-
 `editor` opens a text editor for an existing file, a new file, or a tempfile,
 blocks while the user edits text, then returns the results.
 
