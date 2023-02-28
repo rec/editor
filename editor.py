@@ -95,7 +95,7 @@ def editor(
     finally:
         if is_temp:
             try:
-                os.unlink(filename)
+                path.unlink()
             except Exception:
                 traceback.print_exc()
 
