@@ -5,7 +5,7 @@ theme:
 
   palette:
     primary:
-      'deepPurple'
+      'indigo'
 
   font:
     text:
