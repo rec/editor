@@ -55,7 +55,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deepPurple" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="">
   
     
     
@@ -183,7 +183,14 @@
     editor
   </a>
   
-    <nav class="md-nav" aria-label="editor">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#editor--editor-open-a-text-editor-from-inside-python" class="md-nav__link">
+    &#128395; editor - open a text editor from inside Python &#128395;
+  </a>
+  
+    <nav class="md-nav" aria-label="&#128395; editor - open a text editor from inside Python &#128395;">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -265,7 +272,14 @@
     editor
   </a>
   
-    <nav class="md-nav" aria-label="editor">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#editor--editor-open-a-text-editor-from-inside-python" class="md-nav__link">
+    &#128395; editor - open a text editor from inside Python &#128395;
+  </a>
+  
+    <nav class="md-nav" aria-label="&#128395; editor - open a text editor from inside Python &#128395;">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -330,8 +344,7 @@
 <a id="editor"></a>
   <div class="doc doc-contents first">
   
-      <p><code>editor</code> opens a text editor for an existing file, a new file, or a tempfile,
-blocks while the user edits text, then returns the results.</p>
+      <h2 id="editor--editor-open-a-text-editor-from-inside-python">&#128395; editor - open a text editor from inside Python &#128395;</h2>
 <p>You can specify a command line that runs the editor, but usually you leave it
 empty - in that case, <code>editor</code> uses the  the command line from the environment
 variable <code>VISUAL</code>, or if that's empty, the environment variable <code>EDITOR</code>, or if
@@ -586,7 +599,7 @@ comments2 = editor(filename=FILE, editor='emacs')
     <span class="k">finally</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">is_temp</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
 </code></pre></div></td>
