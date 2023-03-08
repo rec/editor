@@ -1,3 +1,5 @@
+# 🖋 editor - open a text editor from inside Python 🖋
+
 `editor` opens a text editor for an existing file, a new file, or a tempfile,
 blocks while the user edits text, then returns the results.
 
