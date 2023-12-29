@@ -1,7 +1,9 @@
-from unittest import mock
-import editor
-import tdir
 import unittest
+from unittest import mock
+
+import tdir
+
+import editor
 
 FILENAME = 'a_file.txt'
 EDITOR = editor.default_editor()

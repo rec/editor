@@ -39,13 +39,14 @@ If a filename is provided, then it gets edited!
     comments2 = editor(filename=FILE, editor='emacs')
 """
 
-from pathlib import Path
-from typing import Mapping, Optional, Union
 import os
 import platform
-import runs
 import tempfile
 import traceback
+import typing as t
+from pathlib import Path
+
+import runs
 import xmod
 
 __all__ = 'editor', 'default_editor'
@@ -54,13 +55,13 @@ DEFAULT_EDITOR = 'vim'
 EDITORS = {'Windows': 'notepad'}
 
 
-@xmod
+@xmod.xmod
 def editor(
-    text: Optional[str] = None,
-    filename: Union[None, Path, str] = None,
-    editor: Optional[str] = None,
-    **kwargs: Mapping
-):
+    text: t.Optional[str] = None,
+    filename: t.Union[None, Path, str] = None,
+    editor: t.Optional[str] = None,
+    **kwargs: t.Mapping,
+) -> str:
     """
     Open a text editor, block while the user edits, then return the results
 
@@ -75,20 +76,21 @@ def editor(
       editor: A string containing the command used to invoke the text editor.
          If `None`, use `editor.default_editor()`.
 
-      kwargs: Arguments passed on to `subprocess.call()`
-"""
+      kwargs: Arguments passed on to `subprocess.call()`"""
     editor = editor or default_editor()
     is_temp = not filename
-    if is_temp:
-        fd, filename = tempfile.mkstemp()
+    if filename is not None:
+        fname = filename
+    else:
+        fd, fname = tempfile.mkstemp()
         os.close(fd)
 
     try:
-        path = Path(filename)
+        path = Path(fname)
         if text is not None:
             path.write_text(text)
 
-        cmd = '{} {}'.format(editor, filename)
+        cmd = '{} {}'.format(editor, fname)
         runs.call(cmd, **kwargs)
         return path.read_text()
 
@@ -100,7 +102,7 @@ def editor(
                 traceback.print_exc()
 
 
-def default_editor():
+def default_editor() -> str:
     """
     Return the default text editor.
 
