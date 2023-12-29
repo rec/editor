@@ -8,7 +8,7 @@ auto = true
 
 [tool.poetry]
 name = "editor"
-version = "1.4.1"
+version = "1.5.0"
 description = "🖋 Open the default text editor 🖋"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
