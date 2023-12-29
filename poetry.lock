@@ -383,13 +383,13 @@ files = [
 
 [[package]]
 name = "runs"
-version = "1.1.0"
-description = "Runs a block of text as a subrprocess"
+version = "1.2.0"
+description = "🏃 Run a block of text as a subprocess 🏃"
 optional = false
-python-versions = "*"
+python-versions = ">=3.8"
 files = [
-    {file = "runs-1.1.0-py3-none-any.whl", hash = "sha256:702a31bec6d3336175ab6dcadd605ebd39b75d792a98303202b090d4556883e3"},
-    {file = "runs-1.1.0.tar.gz", hash = "sha256:c8685f129e54086f103b365c8d20c3f117f7518d0717962905c96248643530ef"},
+    {file = "runs-1.2.0-py3-none-any.whl", hash = "sha256:ec6fe3b24dfa20c5c4e5c4806d3b35bb880aad0e787a8610913c665c5a7cc07c"},
+    {file = "runs-1.2.0.tar.gz", hash = "sha256:8804271011b7a2eeb0d77c3e3f556e5ce5f602fa0dd2a31ed0c1222893be69b7"},
 ]
 
 [package.dependencies]

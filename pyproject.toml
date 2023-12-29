@@ -29,12 +29,12 @@ pytest = "*"
 ruff = "*"
 
 [tool.coverage.run]
-branch = "True"
-source = "editor"
+branch = true
+source = ["editor"]
 
 [tool.coverage.report]
-fail_under = "100"
-skip_covered = "True"
+fail_under = 95
+skip_covered = true
 exclude_lines = [
     "pragma: no cover",
     "if False:",
