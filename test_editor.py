@@ -1,3 +1,4 @@
+from pathlib import Path
 import unittest
 from unittest import mock
 
@@ -17,9 +18,10 @@ class TestEditor(unittest.TestCase):
         expected = FILENAME + '\n'
         assert actual == expected
 
-        call.assert_called_once_with('{} {}'.format(EDITOR, FILENAME))
+        filename = Path(FILENAME).resolve()
+        call.assert_called_once_with('{} "{}"'.format(EDITOR, filename))
 
-        actual = editor('X', filename=FILENAME)
+        actual = editor('X', filename=filename)
         expected = 'X'
         assert actual == expected
 
@@ -29,7 +31,8 @@ class TestEditor(unittest.TestCase):
         expected = 'X'
         assert actual == expected
 
-        expected = '{} {}'.format(EDITOR, FILENAME)
+        filename = Path(FILENAME).resolve()
+        expected = '{} "{}"'.format(EDITOR, filename)
         call.assert_called_once_with(expected, shell=True)
 
     def test_temp(self, call):

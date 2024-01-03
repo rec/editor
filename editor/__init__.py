@@ -90,7 +90,7 @@ def editor(
         if text is not None:
             path.write_text(text)
 
-        cmd = '{} {}'.format(editor, fname)
+        cmd = '{} "{}"'.format(editor, path.resolve())
         runs.call(cmd, **kwargs)
         return path.read_text()
 
