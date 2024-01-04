@@ -27,6 +27,7 @@ isort = "*"
 mypy = "*"
 pytest = "*"
 ruff = "*"
+tdir = "*"
 
 [tool.coverage.run]
 branch = true
