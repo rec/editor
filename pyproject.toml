@@ -13,6 +13,9 @@ description = "🖋 Open the default text editor 🖋"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/rec/editor"
+homepage = "https://github.com/rec/editor"
+documentation = "https://rec.github.io/editor"
 
 [tool.poetry.dependencies]
 python = ">=3.8"
