@@ -19,7 +19,7 @@ returned.
 
     from editor import editor
 
-    MESSAGE = 'Insert comments below this line\\n\\n'
+    MESSAGE = 'Insert comments below this line\n\n'
     comments = editor(text=MESSAGE)
     # Pops up the default editor with a tempfile, containing MESSAGE
 
