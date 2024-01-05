@@ -1,22 +1,25 @@
-# 🖋 editor - Open the default text editor 🖋
+# 🖋 editor - Open a text editor 🖋
 
-`editor` opens a text editor for an existing file, a new file, or a tempfile,
-blocks while the user edits text, then returns the results.
+`editor` opens the default text editor or your favorite editor to edit an existing file,
+a new file, or a tempfile, blocks while the user edits text, then returns the contents
+of the file.
 
-You can specify a command line that runs the editor, but usually you leave it
-empty - in that case, `editor` uses the  the command line from the environment
-variable `VISUAL`, or if that's empty, the environment variable `EDITOR`, or if
-*that's* empty, either `Notepad` on Windows or `vi` elsewhere.
+You can pass a parameter `editor=` to specify an editor or leave it empty, in which
+case the editor is:
+
+* The contents of the environment variable `VISUAL`, if it's set, otherwise:
+* The the contents of the environment variable `EDITOR`, if it's set, otherwise:
+* The string `'Notepad'`, if the code is running on Windows, otherwise:
+* The string `'vim'`
 
 ### Example 1: Using a temporary file
 
 If no filename is provided, a temporary file gets edited, and its contents
 returned.
 
+    from editor import editor
 
-    import editor
-
-    MESSAGE = 'Insert comments below this line\n\n'
+    MESSAGE = 'Insert comments below this line\\n\\n'
     comments = editor(text=MESSAGE)
     # Pops up the default editor with a tempfile, containing MESSAGE
 
@@ -35,7 +38,6 @@ If a filename is provided, then it gets edited!
     assert os.path.exists(FILE)
 
     # You can edit an existing file too, and select your own editor.
-    comments2 = editor(filename=FILE, editor='emacs')
-
+    comments2 = editor(filename=FILE, editor='emacs -nw')
 
 ### [API Documentation](https://rec.github.io/editor#editor--api-documentation)
