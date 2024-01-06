@@ -8,6 +8,7 @@ import editor
 
 FILENAME = 'a_file.txt'
 EDITOR = editor.default_editor()
+TEST_CONTENT = 'roses are red,\nwater is blue.\n'
 
 
 @mock.patch('editor.runs.call', autospec=True)
@@ -46,3 +47,15 @@ class TestEditor(unittest.TestCase):
         expected = 'some contents'
         assert actual == expected
         call.assert_called_once()
+
+
+def main():
+    print(editor.editor())
+
+
+def test_main(monkeypatch, capsys):
+    monkeypatch.setattr('editor.editor', lambda: TEST_CONTENT)
+
+    main()
+
+    assert TEST_CONTENT + '\n' == capsys.readouterr().out

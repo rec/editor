@@ -59,7 +59,7 @@ DEFAULT_EDITOR = 'vim'
 EDITORS = {'Windows': 'notepad'}
 
 
-@xmod.xmod
+@xmod.xmod(mutable=True)
 def editor(
     text: t.Optional[str] = None,
     filename: t.Union[None, Path, str] = None,
