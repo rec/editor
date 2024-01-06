@@ -18,28 +18,29 @@ case the editor is:
 If no filename is provided, a temporary file gets edited, and its contents
 returned.
 
-    from editor import editor
+    import editor
 
-    MESSAGE = 'Insert comments below this line\\n\\n'
-    comments = editor(text=MESSAGE)
-    # Pops up the default editor with a tempfile, containing MESSAGE
+    comments = editor.editor(text='Comments here\\n\\n')
+    # Pop up the default editor with a tempfile containing "Comments here",
+    # then return the contents and delete the tempfile.
 
 ### Example 2: Using a named file
 
-If a filename is provided, then it gets edited!
+If a filename is provided, then that file gets edited.
 
     import os
 
     FILE = 'file.txt'
     assert not os.path.exists(FILE)
 
-    comments = editor(text=MESSAGE, filename=FILE)
-    # Pops up an editor for new FILE containing MESSAGE, user edits
+    comments = editor.editor(text=MESSAGE, filename=FILE)
+    # Pop up an editor for a new FILE containing MESSAGE, user edits
+    # This file is saved when the user exits the editor.
 
     assert os.path.exists(FILE)
 
     # You can edit an existing file too, and select your own editor.
-    comments2 = editor(filename=FILE, editor='emacs -nw')
+    comments2 = editor.editor(filename=FILE, editor='emacs -nw')
 """
 
 import os
