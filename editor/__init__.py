@@ -59,12 +59,12 @@ DEFAULT_EDITOR = 'vim'
 EDITORS = {'Windows': 'notepad'}
 
 
-@xmod.xmod(mutable=True)
+@xmod.xmod(mutable=True)  # type: ignore[misc]
 def editor(
     text: t.Optional[str] = None,
     filename: t.Union[None, Path, str] = None,
     editor: t.Optional[str] = None,
-    **kwargs: t.Mapping,
+    **kwargs: t.Any,
 ) -> str:
     """
     Open a text editor, block while the user edits, then return the results
@@ -115,6 +115,5 @@ def default_editor() -> str:
     `'notepad'`, otherwise `'vim'`.
     """
     return os.environ.get('VISUAL') or (
-        os.environ.get('EDITOR')
-        or EDITORS.get(platform.system(), DEFAULT_EDITOR)
+        os.environ.get('EDITOR') or EDITORS.get(platform.system(), DEFAULT_EDITOR)
     )
