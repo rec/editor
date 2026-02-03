@@ -59,7 +59,7 @@ DEFAULT_EDITOR = 'vim'
 EDITORS = {'Windows': 'notepad'}
 
 
-@xmod.xmod(mutable=True)  # type: ignore[misc]
+@xmod.xmod(mutable=True)
 def editor(
     text: t.Optional[str] = None,
     filename: t.Union[None, Path, str] = None,
@@ -94,7 +94,7 @@ def editor(
         if text is not None:
             path.write_text(text)
 
-        cmd = '{} "{}"'.format(editor, path.resolve())
+        cmd = f'{editor} "{path.resolve()}"'
         runs.call(cmd, **kwargs)
         return path.read_text()
 
