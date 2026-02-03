@@ -20,7 +20,7 @@ class TestEditor(unittest.TestCase):
         assert actual == expected
 
         filename = Path(FILENAME).resolve()
-        call.assert_called_once_with('{} "{}"'.format(EDITOR, filename))
+        call.assert_called_once_with(f'{EDITOR} "{filename}"')
 
         actual = editor('X', filename=filename)
         expected = 'X'
@@ -33,7 +33,7 @@ class TestEditor(unittest.TestCase):
         assert actual == expected
 
         filename = Path(FILENAME).resolve()
-        expected = '{} "{}"'.format(EDITOR, filename)
+        expected = f'{EDITOR} "{filename}"'
         call.assert_called_once_with(expected, shell=True)
 
     def test_temp(self, call):
