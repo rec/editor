@@ -1,6 +1,6 @@
 [project]
 name = "editor"
-version = "1.7.0"
+version = "1.8.0"
 description = "🖋 Open the default text editor 🖋"
 authors = [{ name = "Tom Ritchford", email = "tom@swirly.com" }]
 requires-python = ">=3.10"
@@ -48,7 +48,7 @@ quote-style = "single"
 
 [tool.poetry]
 name = "editor"
-version = "0.1.0"
+version = "1.8.0"
 description = "🖋 Open the default text editor 🖋"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 readme = "README.md"
