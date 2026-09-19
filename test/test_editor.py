@@ -50,6 +50,14 @@ class TestEditor(unittest.TestCase):
         call.assert_called_once()
 
     @tdir
+    def test_configured_encoding(self, call):
+        Path(FILENAME).write_bytes(b'caf\xe9')
+
+        actual = editor(filename=FILENAME, encoding='latin-1')
+
+        assert actual == 'café'
+
+    @tdir
     def test_sequence_editor_keeps_paths_as_one_argument(self, call):
         filename = 'a "quoted" file.txt'
 

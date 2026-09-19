@@ -65,6 +65,8 @@ def editor(
     text: t.Optional[str] = None,
     filename: t.Union[None, Path, str] = None,
     editor: t.Union[None, str, t.Sequence[str]] = None,
+    encoding: str | None = None,
+    errors: str | None = None,
     **kwargs: t.Any,
 ) -> str:
     """
@@ -93,11 +95,11 @@ def editor(
     try:
         path = Path(fname)
         if text is not None:
-            path.write_text(text)
+            path.write_text(text, encoding=encoding, errors=errors)
 
         command = shlex.split(editor) if isinstance(editor, str) else list(editor)
         subprocess.call([*command, str(path.resolve())], **kwargs)
-        return path.read_text()
+        return path.read_text(encoding=encoding, errors=errors)
 
     finally:
         if is_temp:
