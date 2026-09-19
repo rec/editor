@@ -64,6 +64,15 @@ class TestEditor(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'editor failed'):
                 editor()
 
+    def test_default_editor_prefers_visual_then_editor_then_platform(self, call):
+        with mock.patch.dict('os.environ', {'VISUAL': 'visual', 'EDITOR': 'edit'}):
+            assert editor.default_editor() == 'visual'
+        with mock.patch.dict('os.environ', {'EDITOR': 'edit'}, clear=True):
+            assert editor.default_editor() == 'edit'
+        with mock.patch.dict('os.environ', {}, clear=True):
+            with mock.patch('editor.platform.system', return_value='Windows'):
+                assert editor.default_editor() == 'notepad'
+
     @tdir
     def test_sequence_editor_keeps_paths_as_one_argument(self, call):
         filename = 'a "quoted" file.txt'
