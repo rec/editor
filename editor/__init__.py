@@ -92,21 +92,25 @@ def editor(
         fd, fname = tempfile.mkstemp()
         os.close(fd)
 
+    path = Path(fname)
     try:
-        path = Path(fname)
         if text is not None:
             path.write_text(text, encoding=encoding, errors=errors)
 
         command = shlex.split(editor) if isinstance(editor, str) else list(editor)
         subprocess.call([*command, str(path.resolve())], **kwargs)
-        return path.read_text(encoding=encoding, errors=errors)
-
-    finally:
+        result = path.read_text(encoding=encoding, errors=errors)
+    except BaseException:
         if is_temp:
             try:
                 path.unlink()
-            except Exception:
+            except OSError:
                 traceback.print_exc()
+        raise
+    else:
+        if is_temp:
+            path.unlink(missing_ok=True)
+        return result
 
 
 def default_editor() -> str:

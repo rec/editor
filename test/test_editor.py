@@ -57,6 +57,13 @@ class TestEditor(unittest.TestCase):
 
         assert actual == 'café'
 
+    def test_temp_cleanup_keeps_editor_failure_visible(self, call):
+        call.side_effect = RuntimeError('editor failed')
+
+        with mock.patch.object(Path, 'unlink', side_effect=OSError('cleanup failed')):
+            with self.assertRaisesRegex(RuntimeError, 'editor failed'):
+                editor()
+
     @tdir
     def test_sequence_editor_keeps_paths_as_one_argument(self, call):
         filename = 'a "quoted" file.txt'
