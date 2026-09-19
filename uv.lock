@@ -3,7 +3,7 @@ revision = 3
 requires-python = ">=3.10"
 
 [options]
-exclude-newer = "2026-09-12T13:39:54.841624Z"
+exclude-newer = "2026-09-12T13:55:07.548342Z"
 exclude-newer-span = "P1W"
 
 [[package]]
@@ -128,7 +128,7 @@ wheels = [
 
 [[package]]
 name = "editor"
-version = "1.8.0"
+version = "2.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "runs" },
