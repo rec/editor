@@ -45,12 +45,13 @@ If a filename is provided, then that file gets edited.
 
 import os
 import platform
+import shlex
+import subprocess
 import tempfile
 import traceback
 import typing as t
 from pathlib import Path
 
-import runs
 import xmod
 
 __all__ = 'editor', 'default_editor'
@@ -63,7 +64,7 @@ EDITORS = {'Windows': 'notepad'}
 def editor(
     text: t.Optional[str] = None,
     filename: t.Union[None, Path, str] = None,
-    editor: t.Optional[str] = None,
+    editor: t.Union[None, str, t.Sequence[str]] = None,
     **kwargs: t.Any,
 ) -> str:
     """
@@ -94,8 +95,8 @@ def editor(
         if text is not None:
             path.write_text(text)
 
-        cmd = f'{editor} "{path.resolve()}"'
-        runs.call(cmd, **kwargs)
+        command = shlex.split(editor) if isinstance(editor, str) else list(editor)
+        subprocess.call([*command, str(path.resolve())], **kwargs)
         return path.read_text()
 
     finally:

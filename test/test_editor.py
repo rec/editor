@@ -1,3 +1,4 @@
+import shlex
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -11,7 +12,7 @@ EDITOR = editor.default_editor()
 TEST_CONTENT = 'roses are red,\nwater is blue.\n'
 
 
-@mock.patch('editor.runs.call', autospec=True)
+@mock.patch('editor.subprocess.call', autospec=True)
 class TestEditor(unittest.TestCase):
     @tdir(FILENAME)
     def test_existing(self, call):
@@ -20,7 +21,7 @@ class TestEditor(unittest.TestCase):
         assert actual == expected
 
         filename = Path(FILENAME).resolve()
-        call.assert_called_once_with(f'{EDITOR} "{filename}"')
+        call.assert_called_once_with([*shlex.split(EDITOR), str(filename)])
 
         actual = editor('X', filename=filename)
         expected = 'X'
@@ -33,7 +34,7 @@ class TestEditor(unittest.TestCase):
         assert actual == expected
 
         filename = Path(FILENAME).resolve()
-        expected = f'{EDITOR} "{filename}"'
+        expected = [*shlex.split(EDITOR), str(filename)]
         call.assert_called_once_with(expected, shell=True)
 
     def test_temp(self, call):
@@ -47,6 +48,14 @@ class TestEditor(unittest.TestCase):
         expected = 'some contents'
         assert actual == expected
         call.assert_called_once()
+
+    @tdir
+    def test_sequence_editor_keeps_paths_as_one_argument(self, call):
+        filename = 'a "quoted" file.txt'
+
+        editor.editor(text='', filename=filename, editor=['emacs', '-nw'])
+
+        call.assert_called_once_with(['emacs', '-nw', str(Path(filename).resolve())])
 
 
 def main():
