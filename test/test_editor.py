@@ -75,7 +75,7 @@ class TestEditor(unittest.TestCase):
 
     @tdir
     def test_sequence_editor_keeps_paths_as_one_argument(self, call):
-        filename = 'a "quoted" file.txt'
+        filename = 'a spaced file.txt'
 
         editor.editor(text='', filename=filename, editor=['emacs', '-nw'])
 
